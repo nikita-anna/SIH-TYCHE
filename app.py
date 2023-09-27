@@ -22,8 +22,8 @@ def get_pdf_text(pdf_docs):
 def get_text_chunks(text):
     text_splitter = CharacterTextSplitter(
         separator="\n",
-        chunk_size=500,
-        chunk_overlap=100,
+        chunk_size=4000,
+        chunk_overlap=500,
         length_function=len
     )
     chunks = text_splitter.split_text(text)
@@ -38,7 +38,7 @@ def get_vectorstore(text_chunks):
 
 
 def get_conversation_chain(vectorstore):
-    llm = ChatOpenAI(model_name="gpt-3.3-turbo")
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo")
     # llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
 
     memory = ConversationBufferMemory(
@@ -76,7 +76,7 @@ def main():
         st.session_state.chat_history = None
 
     st.header("Legal Buddy :books:")
-    user_question = st.text_input("Ask me a question about your documents:")
+    user_question = st.text_input("Ask a question about your documents:")
     if user_question:
         handle_userinput(user_question)
 
