@@ -1,4 +1,7 @@
 import streamlit as st
+import json 
+
+from streamlit_lottie import st_lottie
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
@@ -67,7 +70,7 @@ def handle_userinput(user_question):
 def main():
     load_dotenv()
     st.set_page_config(page_title="Legal Buddy",
-                       page_icon=":books:")
+                       page_icon=":scales:")
     st.write(css, unsafe_allow_html=True)
 
     if "conversation" not in st.session_state:
@@ -75,16 +78,32 @@ def main():
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None
 
-    st.header("Legal Buddy :books:")
-    user_question = st.text_input("Ask a question about your documents:")
+    st.header("Legal Buddy :scales:")
+    user_question = st.text_input("Ask me a question about your documents:")
     if user_question:
         handle_userinput(user_question)
 
     with st.sidebar:
-        st.subheader("Your documents")
-        pdf_docs = st.file_uploader(
+         path = r"/Users/nikky/Downloads/Animation - 1695807170262 (2).json"
+         with open(path,"r") as file:
+          url = json.load(file)
+
+         st_lottie (url,
+        reverse=True,
+        height=100,
+        width=100,
+        speed=1,
+        loop=True,
+        quality='high',
+        key='Car'
+        )
+       
+
+
+         st.subheader("Your documents")
+         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
-        if st.button("Process"):
+    if st.button("Process"):
             with st.spinner("Processing"):
                 # get pdf text
                 raw_text = get_pdf_text(pdf_docs)
