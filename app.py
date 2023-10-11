@@ -100,7 +100,7 @@ def main():
        
 
 
-         st.subheader("Your documents")
+         st.subheader("Your documents ")
          pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
     if st.button("Process"):
